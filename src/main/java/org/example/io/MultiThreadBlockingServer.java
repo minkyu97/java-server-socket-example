@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class SingleThreadBlockingServer extends AbstractBlockingServer {
+public class MultiThreadBlockingServer extends AbstractBlockingServer {
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = new ServerSocket(8080);
 
@@ -12,7 +12,7 @@ public class SingleThreadBlockingServer extends AbstractBlockingServer {
             Socket socket = serverSocket.accept();
             System.out.println("Accepted connection from " + socket + " on thread " + Thread.currentThread().getName());
 
-            handleRequest(socket);
+            new Thread(() -> handleRequest(socket)).start();
         }
     }
 }
